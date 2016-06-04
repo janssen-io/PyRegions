@@ -1,0 +1,10 @@
+[
+  // Package commands
+  { "caption": "PyRegions: Mark Regions",
+    "command": "py_regions_mark"
+  },
+
+  { "caption": "PyRegions: Toggle Regions",
+    "command": "py_regions_toggle"
+  }
+]

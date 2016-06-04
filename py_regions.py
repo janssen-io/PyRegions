@@ -40,6 +40,7 @@ class PyRegionsToggleCommand(sublime_plugin.TextCommand):
 
 class PyRegionsListener(sublime_plugin.EventListener):
     def on_selection_modified(self, view):
+        view.run_command('py_regions_mark')
         status_set = False
         cursors = get_cursor(view)
         for cursor in cursors:

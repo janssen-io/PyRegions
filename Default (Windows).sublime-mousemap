@@ -1,0 +1,9 @@
+[
+   { 
+        "button": "button1",
+        "count": 2,
+        "modifiers": ["ctrl"],
+        "press_command": "drag_select",
+        "command": "py_regions_toggle" 
+    }
+]

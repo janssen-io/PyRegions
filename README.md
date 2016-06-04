@@ -1,6 +1,6 @@
 # PyRegions
 PyRegions is a simple Sublime Text plugin to add custom toggable regions in Python files. 
-Other plugins (such as [SyntaxFold](https://github.com/jamalsenouci/sublimetext-syntaxfold)) do a great, if not better, job at this. However, I've always wanted to create a Sublime Text plugin.
+Other plugins (such as [SyntaxFold](https://github.com/jamalsenouci/sublimetext-syntaxfold)) do a great, if not better, job at this. However, I've always wanted to create a Sublime Text plugin, so here it is. :)
 
 ## Features
 * Toggle regions independent of indentation.

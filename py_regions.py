@@ -39,6 +39,19 @@ class PyRegionsToggleCommand(sublime_plugin.TextCommand):
                         self.view.unfold(region)
                     break
 
+class PyRegionsGotoCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        self.window = self.view.window()
+        self.position = get_cursor(self.view)[0]
+        self.view.run_command('py_regions_mark')
+        self.window.show_quick_panel(Info.names, self.goto, sublime.MONOSPACE_FONT, 0, self.goto)
+
+    def goto(self, index):
+        if index == -1:
+            self.view.show(self.position)
+        else:
+            self.view.show(self.view.get_regions(Info.PLUGIN_NAME)[index].begin())
+
 class PyRegionsListener(sublime_plugin.EventListener):
     def on_selection_modified(self, view):
         view.run_command('py_regions_mark')

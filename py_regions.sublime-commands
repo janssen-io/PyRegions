@@ -6,5 +6,9 @@
 
   { "caption": "PyRegions: Toggle Regions",
     "command": "py_regions_toggle"
+  },
+
+  { "caption": "PyRegions: Goto Region",
+    "command": "py_regions_goto"
   }
 ]

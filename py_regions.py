@@ -7,30 +7,31 @@ def get_view_text(view):
 def get_cursor(view):
     return [region.begin() for region in view.sel()]
 
-PLUGIN_NAME = "PyRegions"
-names = []
+class Info:
+    PLUGIN_NAME = "PyRegions"
+    names = []
+
 class PyRegionsMarkCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        global names
-        names = []
-        self.view.erase_regions(PLUGIN_NAME)
+        Info.names = []
+        self.view.erase_regions(Info.PLUGIN_NAME)
         regions = []
         contents = get_view_text(self.view)
         matches = re.finditer(r'#region:(.*?)$(.|[\n])*?#endregion:\1', contents, re.M)
         for match in matches:
             region = sublime.Region(match.start(), match.end())
-            names.append(match.group(1))
+            Info.names.append(match.group(1))
             lines = self.view.lines(region)
             region = sublime.Region(lines[0].b, lines[-1].b)
             regions.append(region)
-        self.view.add_regions(PLUGIN_NAME, regions, "comment", "bookmark", sublime.HIDDEN)
+        self.view.add_regions(Info.PLUGIN_NAME, regions, "comment", "bookmark", sublime.HIDDEN)
 
 class PyRegionsToggleCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         self.view.run_command('py_regions_mark')
         cursors = get_cursor(self.view)
         for cursor in cursors:
-            for region in self.view.get_regions(PLUGIN_NAME):
+            for region in self.view.get_regions(Info.PLUGIN_NAME):
                 lines = self.view.lines(region)
                 start, end = lines[0].a, lines[-1].b
                 if start <= cursor <= end:
@@ -44,14 +45,14 @@ class PyRegionsListener(sublime_plugin.EventListener):
         status_set = False
         cursors = get_cursor(view)
         for cursor in cursors:
-            for index, region in enumerate(view.get_regions(PLUGIN_NAME)):
+            for index, region in enumerate(view.get_regions(Info.PLUGIN_NAME)):
                 lines = view.lines(region)
                 start, end = lines[0].a, lines[-1].b
                 if start <= cursor <= end:
-                    view.set_status(PLUGIN_NAME, "Region: " + names[index])
+                    view.set_status(Info.PLUGIN_NAME, "Region: " + Info.names[index])
                     status_set = True
         if not status_set:
-            view.erase_status(PLUGIN_NAME)
+            view.erase_status(Info.PLUGIN_NAME)
 
     def on_load(self, view):
         view.run_command('py_regions_mark')
